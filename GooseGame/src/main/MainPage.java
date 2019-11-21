@@ -1,21 +1,34 @@
 package main;
 
 import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
+import java.awt.event.ActionEvent;
 
 public class MainPage {
 
-	private JFrame frame;
+	private static JFrame frame;
 	private static List<Player> playerList = new ArrayList<Player>() ;
+	private static JButton buttonStartGame;
+	private static JTextArea textArea1;
+	private static JButton buttonRollDices1;
+	private static JTextArea textArea3;
+	private static JButton buttonRollDices3;
+	private static JButton buttonRollDices4;
+	private static JTextArea textArea4;
+	private static JButton buttonRollDices2;
+	private static JTextArea textArea2;
+	private static JButton buttonAddPlayer;
 
 	/**
 	 * Launch the application.
@@ -45,95 +58,142 @@ public class MainPage {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1096, 640);
+		frame.setBounds(100, 100, 1929, 1056);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		JLabel lblNewLabel = new JLabel("Goose Game");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblNewLabel.setBounds(426, 11, 194, 89);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel label = new JLabel("Goose Game");
+		label.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		JTextArea txtrPlayer1 = new JTextArea();
-		txtrPlayer1.setText("Player 1:");
-		txtrPlayer1.setBounds(10, 158, 262, 126);
-		frame.getContentPane().add(txtrPlayer1);
-		
-		JTextArea txtrPlayer2 = new JTextArea();
-		txtrPlayer2.setText("Player 2:");
-		txtrPlayer2.setBounds(808, 158, 262, 126);
-		frame.getContentPane().add(txtrPlayer2);
-		
-		JTextArea txtrPlayer3 = new JTextArea();
-		txtrPlayer3.setText("Player 3:");
-		txtrPlayer3.setBounds(10, 420, 262, 126);
-		frame.getContentPane().add(txtrPlayer3);
-		
-		JTextArea txtrPlayer4 = new JTextArea();
-		txtrPlayer4.setText("Player 4:");
-		txtrPlayer4.setBounds(808, 420, 262, 126);
-		frame.getContentPane().add(txtrPlayer4);
-		
-		JButton btnNewButton = new JButton("Start Game");
-		btnNewButton.addActionListener(new ActionListener() {
+		buttonStartGame = new JButton("Start Game");
+		buttonStartGame.setEnabled(false);
+		buttonStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				buttonAddPlayer.setEnabled(false);
 			}
 		});
-		btnNewButton.setBounds(183, 103, 89, 23);
-		frame.getContentPane().add(btnNewButton);
 		
-		JButton btnAddPlayer = new JButton("Add Player");
-		btnAddPlayer.addActionListener(new ActionListener() {
+		buttonAddPlayer = new JButton("Add Player");
+		buttonAddPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddPlayer addPlayer=new AddPlayer();
 				addPlayer.show();
 			}
 		});
-		btnAddPlayer.setBounds(808, 103, 89, 23);
-		frame.getContentPane().add(btnAddPlayer);
 		
-		JButton button = new JButton("Start Game");
-		button.setBounds(183, 261, 89, 23);
-		frame.getContentPane().add(button);
+		textArea1 = new JTextArea();
+		textArea1.setText("Player 1: \nPosition:");
+		textArea1.setVisible(false);
 		
-		JButton btnRollDices1 = new JButton("Roll Dices");
-		btnRollDices1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		btnRollDices1.setBounds(183, 285, 89, 23);
-		frame.getContentPane().add(btnRollDices1);
+		textArea2 = new JTextArea();
+		textArea2.setText("Player 2:");
+		textArea2.setVisible(false);
 		
-		JButton btnRollDices2 = new JButton("Roll Dices");
-		btnRollDices2.addActionListener(new ActionListener() {
+		buttonRollDices1 = new JButton("Roll Dices");
+		buttonRollDices1.setVisible(false);
+		buttonRollDices1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 			}
 		});
-		btnRollDices2.setBounds(808, 285, 89, 23);
-		frame.getContentPane().add(btnRollDices2);
 		
-		JButton btnRollDices3 = new JButton("Roll Dices");
-		btnRollDices3.addActionListener(new ActionListener() {
+		buttonRollDices2 = new JButton("Roll Dices");
+		buttonRollDices2.setVisible(false);
+		buttonRollDices2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 			}
 		});
-		btnRollDices3.setBounds(183, 545, 89, 23);
-		frame.getContentPane().add(btnRollDices3);
 		
-		JButton btnRollDices4 = new JButton("Roll Dices");
-		btnRollDices4.addActionListener(new ActionListener() {
+		textArea3 = new JTextArea();
+		textArea3.setText("Player 3:");
+		textArea3.setVisible(false);
+		
+		textArea4 = new JTextArea();
+		textArea4.setText("Player 4:");
+		textArea4.setVisible(false);
+		
+		buttonRollDices3 = new JButton("Roll Dices");
+		buttonRollDices3.setVisible(false);
+		buttonRollDices3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 			}
 		});
-		btnRollDices4.setBounds(808, 545, 89, 23);
-		frame.getContentPane().add(btnRollDices4);
+		
+		buttonRollDices4 = new JButton("Roll Dices");
+		buttonRollDices4.setVisible(false);
+		buttonRollDices4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(67)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(149)
+							.addComponent(buttonStartGame, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 1228, Short.MAX_VALUE)
+							.addComponent(buttonAddPlayer, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+							.addGap(149))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(buttonRollDices3, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(textArea3, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addGap(151)
+										.addComponent(buttonRollDices1, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
+									.addComponent(textArea1, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)))
+							.addGap(1228)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(textArea4, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)
+								.addComponent(buttonRollDices2, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(buttonRollDices4, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+										.addGap(151))
+									.addComponent(textArea2, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)))))
+					.addGap(90))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(847)
+					.addComponent(label, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+					.addGap(862))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(buttonStartGame)
+						.addComponent(buttonAddPlayer))
+					.addGap(32)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(textArea1, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textArea2, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(buttonRollDices1)
+						.addComponent(buttonRollDices2))
+					.addGap(57)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(textArea4, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textArea3, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(buttonRollDices4)
+						.addComponent(buttonRollDices3))
+					.addContainerGap(484, Short.MAX_VALUE))
+		);
+		frame.getContentPane().setLayout(groupLayout);
 	}
-
+	public static void closeWindow()
+	{
+		frame.dispose();
+	}
+	
 	public static List<Player> getPlayerList() {
 		return playerList;
 	}
@@ -141,6 +201,95 @@ public class MainPage {
 	public static void setPlayerList(List<Player> playerList) {
 		MainPage.playerList = playerList;
 	}
+
+	public static JFrame getFrame() {
+		return frame;
+	}
+
+	public static void setFrame(JFrame frame) {
+		MainPage.frame = frame;
+	}
+
+	public static JButton getButtonStartGame() {
+		return buttonStartGame;
+	}
+
+	public static void setButtonStartGame(JButton buttonStartGame) {
+		MainPage.buttonStartGame = buttonStartGame;
+	}
+
+	public static JTextArea getTextArea1() {
+		return textArea1;
+	}
+
+	public static void setTextArea1(JTextArea textArea1) {
+		MainPage.textArea1 = textArea1;
+	}
+
+	public static JButton getButtonRollDices1() {
+		return buttonRollDices1;
+	}
+
+	public static void setButtonRollDices1(JButton buttonRollDices1) {
+		MainPage.buttonRollDices1 = buttonRollDices1;
+	}
+
+	public static JTextArea getTextArea3() {
+		return textArea3;
+	}
+
+	public static void setTextArea3(JTextArea textArea3) {
+		MainPage.textArea3 = textArea3;
+	}
+
+	public static JButton getButtonRollDices3() {
+		return buttonRollDices3;
+	}
+
+	public static void setButtonRollDices3(JButton buttonRollDices3) {
+		MainPage.buttonRollDices3 = buttonRollDices3;
+	}
+
+	public static JButton getButtonRollDices4() {
+		return buttonRollDices4;
+	}
+
+	public static void setButtonRollDices4(JButton buttonRollDices4) {
+		MainPage.buttonRollDices4 = buttonRollDices4;
+	}
+
+	public static JTextArea getTextArea4() {
+		return textArea4;
+	}
+
+	public static void setTextArea4(JTextArea textArea4) {
+		MainPage.textArea4 = textArea4;
+	}
+
+	public static JButton getButtonRollDices2() {
+		return buttonRollDices2;
+	}
+
+	public static void setButtonRollDices2(JButton buttonRollDices2) {
+		MainPage.buttonRollDices2 = buttonRollDices2;
+	}
+
+	public static JTextArea getTextArea2() {
+		return textArea2;
+	}
+
+	public static void setTextArea2(JTextArea textArea2) {
+		MainPage.textArea2 = textArea2;
+	}
+
+	public static JButton getButtonAddPlayer() {
+		return buttonAddPlayer;
+	}
+
+	public static void setButtonAddPlayer(JButton buttonAddPlayer) {
+		MainPage.buttonAddPlayer = buttonAddPlayer;
+	}
+
 	
-	
+
 }
