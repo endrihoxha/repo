@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 
 public class MainPage {
 
+	private Boolean position63=false;
 	private static JFrame frame;
 	private static List<Player> playerList = new ArrayList<Player>() ;
 	private static JButton buttonStartGame;
@@ -70,6 +71,9 @@ public class MainPage {
 		buttonStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonAddPlayer.setEnabled(false);
+				textArea1.setEnabled(true);
+				buttonRollDices1.setEnabled(true);
+				
 			}
 		});
 		
@@ -93,6 +97,7 @@ public class MainPage {
 		buttonRollDices1.setVisible(false);
 		buttonRollDices1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				rollDices();
 			}
 		});
 		
@@ -100,6 +105,7 @@ public class MainPage {
 		buttonRollDices2.setVisible(false);
 		buttonRollDices2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				rollDices();
 			}
 		});
 		
@@ -115,6 +121,7 @@ public class MainPage {
 		buttonRollDices3.setVisible(false);
 		buttonRollDices3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				rollDices();
 			}
 		});
 		
@@ -122,6 +129,7 @@ public class MainPage {
 		buttonRollDices4.setVisible(false);
 		buttonRollDices4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				rollDices();
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -188,6 +196,52 @@ public class MainPage {
 					.addContainerGap(484, Short.MAX_VALUE))
 		);
 		frame.getContentPane().setLayout(groupLayout);
+	}
+	
+	
+	public void rollDices() {
+		for(int i=0;i<playerList.size();i++) {
+			if(i==0) {
+				textArea1.setEnabled(true);
+				buttonRollDices1.setEnabled(true);
+				textArea2.setEnabled(false);
+				buttonRollDices2.setEnabled(false);
+				textArea3.setEnabled(false);
+				buttonRollDices3.setEnabled(false);
+				textArea4.setEnabled(false);
+				buttonRollDices4.setEnabled(false);
+			}else if(i==1) {
+				textArea1.setEnabled(false);
+				buttonRollDices1.setEnabled(false);
+				textArea2.setEnabled(true);
+				buttonRollDices2.setEnabled(true);
+				textArea3.setEnabled(false);
+				buttonRollDices3.setEnabled(false);
+				textArea4.setEnabled(false);
+				buttonRollDices4.setEnabled(false);
+			}else if(i==2) {
+				textArea1.setEnabled(false);
+				buttonRollDices1.setEnabled(false);
+				textArea2.setEnabled(false);
+				buttonRollDices2.setEnabled(false);
+				textArea3.setEnabled(true);
+				buttonRollDices3.setEnabled(true);
+				textArea4.setEnabled(false);
+				buttonRollDices4.setEnabled(false);
+			}else if(i==3) {
+				textArea1.setEnabled(false);
+				buttonRollDices1.setEnabled(false);
+				textArea2.setEnabled(false);
+				buttonRollDices2.setEnabled(false);
+				textArea3.setEnabled(false);
+				buttonRollDices3.setEnabled(false);
+				textArea4.setEnabled(true);
+				buttonRollDices4.setEnabled(true);
+			}
+			if(i==playerList.size()-1) {
+				i=0;
+			}		
+		}
 	}
 	public static void closeWindow()
 	{
