@@ -4,22 +4,27 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 
 public class MainPage {
 
 	private Boolean position63=false;
 	private static JFrame frame;
 	private static List<Player> playerList = new ArrayList<Player>() ;
+	private int nrOfPlayers=0;
+	private int indexOfCurrentPlayer;
 	private static JButton buttonStartGame;
 	private static JTextArea textArea1;
 	private static JButton buttonRollDices1;
@@ -30,6 +35,9 @@ public class MainPage {
 	private static JButton buttonRollDices2;
 	private static JTextArea textArea2;
 	private static JButton buttonAddPlayer;
+	private JPanel panel;
+	private JLabel firstDicePanel;
+	private JLabel secondDicePanel;
 
 	/**
 	 * Launch the application.
@@ -59,7 +67,7 @@ public class MainPage {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1929, 1056);
+		frame.setBounds(100, 100, 1399, 703);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
@@ -73,7 +81,9 @@ public class MainPage {
 				buttonAddPlayer.setEnabled(false);
 				textArea1.setEnabled(true);
 				buttonRollDices1.setEnabled(true);
-				
+				nrOfPlayers=playerList.size();
+				indexOfCurrentPlayer=0;
+				nextTurn();
 			}
 		});
 		
@@ -132,18 +142,15 @@ public class MainPage {
 				rollDices();
 			}
 		});
+		
+		panel = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(67)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(149)
-							.addComponent(buttonStartGame, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 1228, Short.MAX_VALUE)
-							.addComponent(buttonAddPlayer, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-							.addGap(149))
+						.addComponent(buttonStartGame, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(buttonRollDices3, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
@@ -153,95 +160,137 @@ public class MainPage {
 										.addGap(151)
 										.addComponent(buttonRollDices1, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
 									.addComponent(textArea1, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)))
-							.addGap(1228)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(textArea4, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)
-								.addComponent(buttonRollDices2, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(buttonRollDices4, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-										.addGap(151))
-									.addComponent(textArea2, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)))))
-					.addGap(90))
+							.addGap(165)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
+							.addGap(236)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(buttonAddPlayer, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+							.addGap(149))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addComponent(textArea4, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)
+							.addComponent(buttonRollDices2, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(buttonRollDices4, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+									.addGap(151))
+								.addComponent(textArea2, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE))))
+					.addGap(550))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(847)
-					.addComponent(label, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-					.addGap(862))
+					.addGap(587)
+					.addComponent(label, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+					.addGap(1122))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(label, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(buttonStartGame)
-						.addComponent(buttonAddPlayer))
-					.addGap(32)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(textArea1, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textArea2, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(buttonRollDices1)
-						.addComponent(buttonRollDices2))
-					.addGap(57)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(textArea4, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textArea3, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(buttonRollDices4)
-						.addComponent(buttonRollDices3))
-					.addContainerGap(484, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(buttonAddPlayer)
+							.addGap(32)
+							.addComponent(textArea2, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(buttonRollDices2)
+							.addGap(57)
+							.addComponent(textArea4, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(buttonRollDices4))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(buttonStartGame)
+							.addGap(32)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(textArea1, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(buttonRollDices1)))
+							.addGap(57)
+							.addComponent(textArea3, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(buttonRollDices3)))
+					.addContainerGap(136, Short.MAX_VALUE))
 		);
+		
+		firstDicePanel = new JLabel("");
+		
+		secondDicePanel = new JLabel("");
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addComponent(firstDicePanel, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(secondDicePanel, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(secondDicePanel, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+				.addComponent(firstDicePanel, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+		);
+		panel.setLayout(gl_panel);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 	
 	
-	public void rollDices() {
-		for(int i=0;i<playerList.size();i++) {
-			if(i==0) {
-				textArea1.setEnabled(true);
-				buttonRollDices1.setEnabled(true);
-				textArea2.setEnabled(false);
-				buttonRollDices2.setEnabled(false);
-				textArea3.setEnabled(false);
-				buttonRollDices3.setEnabled(false);
-				textArea4.setEnabled(false);
-				buttonRollDices4.setEnabled(false);
-			}else if(i==1) {
-				textArea1.setEnabled(false);
-				buttonRollDices1.setEnabled(false);
-				textArea2.setEnabled(true);
-				buttonRollDices2.setEnabled(true);
-				textArea3.setEnabled(false);
-				buttonRollDices3.setEnabled(false);
-				textArea4.setEnabled(false);
-				buttonRollDices4.setEnabled(false);
-			}else if(i==2) {
-				textArea1.setEnabled(false);
-				buttonRollDices1.setEnabled(false);
-				textArea2.setEnabled(false);
-				buttonRollDices2.setEnabled(false);
-				textArea3.setEnabled(true);
-				buttonRollDices3.setEnabled(true);
-				textArea4.setEnabled(false);
-				buttonRollDices4.setEnabled(false);
-			}else if(i==3) {
-				textArea1.setEnabled(false);
-				buttonRollDices1.setEnabled(false);
-				textArea2.setEnabled(false);
-				buttonRollDices2.setEnabled(false);
-				textArea3.setEnabled(false);
-				buttonRollDices3.setEnabled(false);
-				textArea4.setEnabled(true);
-				buttonRollDices4.setEnabled(true);
-			}
-			if(i==playerList.size()-1) {
-				i=0;
-			}		
+	public int rollDices() {
+		
+		int firstDice=((int) (Math.random()*10000) % 6)+ 1;
+		firstDicePanel.setIcon(new ImageIcon(MainPage.class.getResource("/images/"+firstDice+".png")));
+		int secondDice=((int) (Math.random()*10000) % 6)+ 1;
+		secondDicePanel.setIcon(new ImageIcon(MainPage.class.getResource("/images/"+secondDice+".png")));
+		nextTurn();
+		return firstDice + secondDice; 
+	}
+	
+	public void nextTurn() {
+		if(indexOfCurrentPlayer==0) {
+			textArea1.setEnabled(true);
+			buttonRollDices1.setEnabled(true);
+			textArea2.setEnabled(false);
+			buttonRollDices2.setEnabled(false);
+			textArea3.setEnabled(false);
+			buttonRollDices3.setEnabled(false);
+			textArea4.setEnabled(false);
+			buttonRollDices4.setEnabled(false);
+			indexOfCurrentPlayer++;
+		}else if(indexOfCurrentPlayer==1) {
+			textArea1.setEnabled(false);
+			buttonRollDices1.setEnabled(false);
+			textArea2.setEnabled(true);
+			buttonRollDices2.setEnabled(true);
+			textArea3.setEnabled(false);
+			buttonRollDices3.setEnabled(false);
+			textArea4.setEnabled(false);
+			buttonRollDices4.setEnabled(false);
+			indexOfCurrentPlayer++;
+		}else if(indexOfCurrentPlayer==2) {
+			textArea1.setEnabled(false);
+			buttonRollDices1.setEnabled(false);
+			textArea2.setEnabled(false);
+			buttonRollDices2.setEnabled(false);
+			textArea3.setEnabled(true);
+			buttonRollDices3.setEnabled(true);
+			textArea4.setEnabled(false);
+			buttonRollDices4.setEnabled(false);
+			indexOfCurrentPlayer++;
+		}else if(indexOfCurrentPlayer==3) {
+			textArea1.setEnabled(false);
+			buttonRollDices1.setEnabled(false);
+			textArea2.setEnabled(false);
+			buttonRollDices2.setEnabled(false);
+			textArea3.setEnabled(false);
+			buttonRollDices3.setEnabled(false);
+			textArea4.setEnabled(true);
+			buttonRollDices4.setEnabled(true);
+			indexOfCurrentPlayer++;
 		}
+		if(indexOfCurrentPlayer==playerList.size()) {
+			indexOfCurrentPlayer=0;
+		}		
 	}
 	public static void closeWindow()
 	{
@@ -343,7 +392,4 @@ public class MainPage {
 	public static void setButtonAddPlayer(JButton buttonAddPlayer) {
 		MainPage.buttonAddPlayer = buttonAddPlayer;
 	}
-
-	
-
 }
