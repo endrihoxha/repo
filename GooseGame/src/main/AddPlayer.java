@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -25,6 +27,7 @@ public class AddPlayer extends JDialog {
 	public AddPlayer() {
 		setTitle("Add new player");
 		setBounds(100, 100, 450, 300);
+		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -50,41 +53,51 @@ public class AddPlayer extends JDialog {
 				addPlayerButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Player newPlayer = new Player();
-						newPlayer.setName(playerNameTextField.getText());
-						newPlayer.setPosition(0);
-						Home.getPlayerList().add(newPlayer);
-						if(Home.getPlayerList().size()>0) {
-							Home.getButtonStartGame().setEnabled(true);
-							if(Home.getPlayerList().size()==1) {
-								Home.getTextArea1().setText("Player 1:"+ Home.getPlayerList().get(0).getName()+" \nPosition:Start");
-								Home.getTextArea1().setVisible(true);
-								Home.getTextArea1().setEnabled(false);
-								Home.getButtonRollDices1().setVisible(true);
-								Home.getButtonRollDices1().setEnabled(false);
-							}							
-							if(Home.getPlayerList().size()==2) {
-								Home.getTextArea2().setText("Player 2:"+ Home.getPlayerList().get(1).getName()+" \nPosition:Start");
-								Home.getTextArea2().setVisible(true);
-								Home.getTextArea2().setEnabled(false);
-								Home.getButtonRollDices2().setVisible(true);
-								Home.getButtonRollDices2().setEnabled(false);
-							}
-							if(Home.getPlayerList().size()==3) {
-								Home.getTextArea3().setText("Player 3:"+ Home.getPlayerList().get(2).getName()+" \nPosition:Start");
-								Home.getTextArea3().setVisible(true);
-								Home.getTextArea3().setEnabled(false);
-								Home.getButtonRollDices3().setVisible(true);
-								Home.getButtonRollDices3().setEnabled(false);
-							}
-							if(Home.getPlayerList().size()==4) {
-								Home.getTextArea4().setText("Player 4:"+ Home.getPlayerList().get(3).getName()+" \nPosition:Start");
-								Home.getTextArea4().setVisible(true);
-								Home.getTextArea4().setEnabled(false);
-								Home.getButtonRollDices4().setVisible(true);
-								Home.getButtonRollDices4().setEnabled(false);
-							}
+						if(playerNameTextField.getText().length()==0 || playerNameTextField.getText().equalsIgnoreCase(" ")) {
+							JOptionPane.showMessageDialog(null,"Please type a player name! ", "Invalid data",
+									JOptionPane.ERROR_MESSAGE);
 						}
-						dispose();
+						else {
+							if(existingPlayer()!=true) {
+								newPlayer.setName(playerNameTextField.getText());
+								newPlayer.setPosition(0);
+								Home.getPlayerList().add(newPlayer);
+								if(Home.getPlayerList().size()>0) {
+									Home.getButtonStartGame().setEnabled(true);
+									if(Home.getPlayerList().size()==1) {
+										Home.getTextArea1().setText("Player 1:"+ Home.getPlayerList().get(0).getName()+" \nPosition:Start");
+										Home.getTextArea1().setVisible(true);
+										Home.getTextArea1().setEnabled(false);
+										Home.getButtonRollDices1().setVisible(true);
+										Home.getButtonRollDices1().setEnabled(false);
+									}							
+									if(Home.getPlayerList().size()==2) {
+										Home.getTextArea2().setText("Player 2:"+ Home.getPlayerList().get(1).getName()+" \nPosition:Start");
+										Home.getTextArea2().setVisible(true);
+										Home.getTextArea2().setEnabled(false);
+										Home.getButtonRollDices2().setVisible(true);
+										Home.getButtonRollDices2().setEnabled(false);
+									}
+									if(Home.getPlayerList().size()==3) {
+										Home.getTextArea3().setText("Player 3:"+ Home.getPlayerList().get(2).getName()+" \nPosition:Start");
+										Home.getTextArea3().setVisible(true);
+										Home.getTextArea3().setEnabled(false);
+										Home.getButtonRollDices3().setVisible(true);
+										Home.getButtonRollDices3().setEnabled(false);
+									}
+									if(Home.getPlayerList().size()==4) {
+										Home.getTextArea4().setText("Player 4:"+ Home.getPlayerList().get(3).getName()+" \nPosition:Start");
+										Home.getTextArea4().setVisible(true);
+										Home.getTextArea4().setEnabled(false);
+										Home.getButtonRollDices4().setVisible(true);
+										Home.getButtonRollDices4().setEnabled(false);
+										Home.getButtonAddPlayer().setEnabled(false);
+									}
+								}
+							}						
+							dispose();
+						}
+						
 					}
 				});
 				addPlayerButton.setActionCommand("Add Player");
@@ -95,11 +108,23 @@ public class AddPlayer extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	public Boolean existingPlayer() {
+		for(Player existingPlayer : Home.getPlayerList()) {
+			if(existingPlayer.getName().equalsIgnoreCase(playerNameTextField.getText())) {
+				JOptionPane.showMessageDialog(null,"Player is already registered! ", "Existing player",
+						JOptionPane.ERROR_MESSAGE);
+				return true;
+				
+			}
+		}
+		return false;
 	}
 }

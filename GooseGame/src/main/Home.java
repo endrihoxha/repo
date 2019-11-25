@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SpringLayout;
 import javax.swing.GroupLayout;
@@ -47,6 +49,7 @@ public class Home extends JFrame {
 	private JPanel panel;
 	private JPanel describeMove;
 	private JTextPane textPaneDescribeMove;
+	private JButton btnNewGame;
 
 	/**
 	 * Launch the application.
@@ -107,6 +110,7 @@ public class Home extends JFrame {
 				nrOfPlayers=playerList.size();
 				indexOfCurrentPlayer=0;
 				nextTurn();
+				buttonStartGame.setEnabled(false);
 			}
 		});
 		
@@ -171,6 +175,28 @@ public class Home extends JFrame {
 		panel.setLayout(gl_panel);
 		
 		describeMove = new JPanel();
+		
+		btnNewGame = new JButton("New Game");
+		btnNewGame.setVisible(false);
+		btnNewGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonStartGame.setEnabled(true);
+				textArea1.setVisible(false);
+				textArea2.setVisible(false);
+				textArea3.setVisible(false);
+				textArea4.setVisible(false);
+				buttonRollDices1.setVisible(false);
+				buttonRollDices2.setVisible(false);
+				buttonRollDices3.setVisible(false);
+				buttonRollDices4.setVisible(false);
+				buttonAddPlayer.setEnabled(true);
+				playerList.clear();
+				btnNewGame.setVisible(false);
+				buttonStartGame.setEnabled(false);
+				textPaneDescribeMove.setText("");
+				
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -180,7 +206,10 @@ public class Home extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addComponent(buttonRollDices1)
-								.addComponent(buttonStartGame)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(btnNewGame)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(buttonStartGame))
 								.addComponent(textArea1, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE))
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_contentPane.createSequentialGroup()
@@ -220,7 +249,8 @@ public class Home extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(buttonStartGame)
-								.addComponent(buttonAddPlayer))
+								.addComponent(buttonAddPlayer)
+								.addComponent(btnNewGame))
 							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -249,6 +279,7 @@ public class Home extends JFrame {
 		);
 		
 		textPaneDescribeMove = new JTextPane();
+		textPaneDescribeMove.setToolTipText("");
 		GroupLayout gl_describeMove = new GroupLayout(describeMove);
 		gl_describeMove.setHorizontalGroup(
 			gl_describeMove.createParallelGroup(Alignment.LEADING)
@@ -317,8 +348,7 @@ public class Home extends JFrame {
 		int secondDice=((int) (Math.random()*10000) % 6)+ 1;
 		secondDicePanel.setIcon(new ImageIcon(Home.class.getResource("/images/"+secondDice+".png")));
 		makeTheMove(firstDice , secondDice,indexOfCurrentPlayer);
-		indexOfCurrentPlayer++;
-		nextTurn();
+		
 	}
 		
 		public void makeTheMove(int firstDice,int secondDice,int playerIndex) {
@@ -345,6 +375,23 @@ public class Home extends JFrame {
 				playerList.set(playerIndex, thePlayer);
 				textArea4.setText("Player 4:"+thePlayer.getName() +" : \nPosition: "+thePlayer.getPosition());
 			}
+			
+			if(newPosition==63) {
+				JOptionPane.showMessageDialog(null,thePlayer.getName()+" WINS!!! ", "WINNER!!!",
+						JOptionPane.ERROR_MESSAGE);
+				textArea1.setEnabled(false);
+				buttonRollDices1.setEnabled(false);
+				textArea2.setEnabled(false);
+				buttonRollDices2.setEnabled(false);
+				textArea3.setEnabled(false);
+				buttonRollDices3.setEnabled(false);
+				textArea4.setEnabled(false);
+				buttonRollDices4.setEnabled(false);
+				btnNewGame.setVisible(true);
+			}else {
+				indexOfCurrentPlayer++;
+				nextTurn();
+			}
 		}
 		
 		public int newPosition(int currentPosition,int firstDice,int secondDice,Player currPlayer) {
@@ -365,6 +412,13 @@ public class Home extends JFrame {
 				textPaneDescribeMove.setText(currPlayer.getName()+" rrols "+firstDice+","+secondDice+" ."+currPlayer.getName()+
 						" moves from "+currentPosition+" to "+ calculation+". The GOOSE. "+ currPlayer.getName() +" moves again and goes to "+secondMove);
 				
+				finalPosition=secondMove;
+				checkFreeSpace(finalPosition, currPlayer);
+			}
+			else if(calculation>63) {
+				int secondMove=63-(calculation-63);
+				textPaneDescribeMove.setText(currPlayer.getName()+" rrols "+firstDice+","+secondDice+" ."+currPlayer.getName()+
+						" moves from "+currentPosition+" to "+ calculation+". "+currPlayer.getName()+"bounces! "+currPlayer.getName()+" returns to "+secondMove );
 				finalPosition=secondMove;
 				checkFreeSpace(finalPosition, currPlayer);
 			}
@@ -481,6 +535,13 @@ public class Home extends JFrame {
 
 		public static void setButtonStartGame(JButton buttonStartGame) {
 			Home.buttonStartGame = buttonStartGame;
-		}		
-				
+		}
+
+		public static JButton getButtonAddPlayer() {
+			return buttonAddPlayer;
+		}
+
+		public static void setButtonAddPlayer(JButton buttonAddPlayer) {
+			Home.buttonAddPlayer = buttonAddPlayer;
+		}				
 }
