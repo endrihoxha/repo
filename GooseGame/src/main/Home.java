@@ -109,8 +109,9 @@ public class Home extends JFrame {
 				buttonRollDices1.setEnabled(true);
 				nrOfPlayers=playerList.size();
 				indexOfCurrentPlayer=0;
-				nextTurn();
 				buttonStartGame.setEnabled(false);
+				nextTurn();
+				
 			}
 		});
 		
@@ -194,7 +195,8 @@ public class Home extends JFrame {
 				btnNewGame.setVisible(false);
 				buttonStartGame.setEnabled(false);
 				textPaneDescribeMove.setText("");
-				
+				firstDicePanel.setVisible(false);
+				secondDicePanel.setVisible(false);
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -342,7 +344,8 @@ public class Home extends JFrame {
 	}
 	
 		public void rollDices() {
-		
+		firstDicePanel.setVisible(true);
+		secondDicePanel.setVisible(true);
 		int firstDice=((int) (Math.random()*10000) % 6)+ 1;
 		firstDicePanel.setIcon(new ImageIcon(Home.class.getResource("/images/"+firstDice+".png")));
 		int secondDice=((int) (Math.random()*10000) % 6)+ 1;
@@ -418,7 +421,7 @@ public class Home extends JFrame {
 			else if(calculation>63) {
 				int secondMove=63-(calculation-63);
 				textPaneDescribeMove.setText(currPlayer.getName()+" rrols "+firstDice+","+secondDice+" ."+currPlayer.getName()+
-						" moves from "+currentPosition+" to "+ calculation+". "+currPlayer.getName()+"bounces! "+currPlayer.getName()+" returns to "+secondMove );
+						" moves from "+currentPosition+" to "+ calculation+". "+currPlayer.getName()+" bounces! "+currPlayer.getName()+" returns to "+secondMove );
 				finalPosition=secondMove;
 				checkFreeSpace(finalPosition, currPlayer);
 			}
