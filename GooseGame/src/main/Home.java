@@ -313,9 +313,9 @@ public class Home extends JFrame {
 		public void rollDices() {
 		
 		int firstDice=((int) (Math.random()*10000) % 6)+ 1;
-		firstDicePanel.setIcon(new ImageIcon(MainPage.class.getResource("/images/"+firstDice+".png")));
+		firstDicePanel.setIcon(new ImageIcon(Home.class.getResource("/images/"+firstDice+".png")));
 		int secondDice=((int) (Math.random()*10000) % 6)+ 1;
-		secondDicePanel.setIcon(new ImageIcon(MainPage.class.getResource("/images/"+secondDice+".png")));
+		secondDicePanel.setIcon(new ImageIcon(Home.class.getResource("/images/"+secondDice+".png")));
 		makeTheMove(firstDice , secondDice,indexOfCurrentPlayer);
 		indexOfCurrentPlayer++;
 		nextTurn();
