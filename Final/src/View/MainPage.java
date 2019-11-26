@@ -34,6 +34,7 @@ public class MainPage {
 	/**
 	 * Create the application.
 	 */
+	
 	public MainPage() {
 		initialize();
 	}
